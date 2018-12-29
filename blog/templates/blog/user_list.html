@@ -1,0 +1,23 @@
+{% extends 'blog/base.html'%}
+
+{% block content %}
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="jumbotron container">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <small>on <a href="{% url 'blog:detail' post.id %}">{{ post.date_posted }}</a> by {{ post.author }}</small>
+        {% if request.user == post.author %}
+            <a href="{% url 'blog:delete' post.id %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+            <a href="{% url 'blog:update' post.id %}"><<button type="submit" class="btn btn-warning">Update</button></a>
+        {% else %}
+            <p></p>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <h4>No Posts yet!</h4>
+{% endif %}
+
+{% endblock content %}
